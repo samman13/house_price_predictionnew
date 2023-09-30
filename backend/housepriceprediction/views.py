@@ -13,7 +13,12 @@ from django.contrib.auth import authenticate, login as auth_login
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout as auth_logout
+import pickle
+from django.http import JsonResponse
 
+# path
+with open('D:\Project VI\HousePrice_ML Model and Datasets\model.pkl', 'rb') as model_file:
+    model = pickle.load(model_file)
 
 # Create your views here.
 
@@ -100,7 +105,7 @@ def error(request):
 def prediction(request):
     if request.method == 'POST':
         # Get form data from the request
-        location = request.POST.get('location')
+        # location = request.POST.get('location')
         bedroom = int(request.POST.get('bedroom'))
         city = request.POST.get('city')
         floors = int(request.POST.get('floors'))
@@ -118,7 +123,7 @@ def prediction(request):
         prediction_value = 19999
 
         # Render the result template and pass the prediction value to the template context
-        return render(request, 'result/result.html', {'prediction': prediction_value})
+        return render(request, 'result/result.html', {'prediction': city})
 
     return render(request, 'prediction/prediction.html')
 
